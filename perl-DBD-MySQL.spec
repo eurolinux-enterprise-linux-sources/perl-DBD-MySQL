@@ -1,11 +1,17 @@
 Name:           perl-DBD-MySQL
 Version:        4.023
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        A MySQL interface for Perl
 Group:          Development/Libraries
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/DBD-mysql/
 Source0:        http://www.cpan.org/authors/id/C/CA/CAPTTOFU/DBD-mysql-%{version}.tar.gz
+# Fix transferring MYSQL_TYPE_LONG values on 64-bit big endian systems,
+# bug #1311646, CPAN RT#57266, in upstream 4.033_03.
+Patch0:         DBD-mysql-4.033_02-Fix-transferring-MYSQL_TYPE_LONG-values-on-64-bit-bi.patch
+# Tests for transferring MYSQL_TYPE_LONG, bug #1311646, CPAN RT#57266,
+# in upstream 4.035_02.
+Patch1:         DBD-mysql-4.023-Tests-for-little-endian-platform.patch
 BuildRequires:  mariadb, mariadb-devel, zlib-devel
 BuildRequires:  perl
 BuildRequires:  perl(Carp)
@@ -34,6 +40,8 @@ management system.
 
 %prep
 %setup -q -n DBD-mysql-%{version}
+%patch0 -p1
+%patch1 -p1
 # Correct file permissions
 find . -type f | xargs chmod -x
 
@@ -65,6 +73,10 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 %{_mandir}/man3/*.3*
 
 %changelog
+* Thu Oct 06 2016 Petr Pisar <ppisar@redhat.com> - 4.023-6
+- Fix transferring MYSQL_TYPE_LONG values on 64-bit big endian systems
+  (bug #1311646)
+
 * Fri Jan 24 2014 Daniel Mach <dmach@redhat.com> - 4.023-5
 - Mass rebuild 2014-01-24
 
