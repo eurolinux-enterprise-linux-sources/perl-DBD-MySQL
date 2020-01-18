@@ -1,6 +1,6 @@
 Name:           perl-DBD-MySQL
 Version:        4.023
-Release:        2%{?dist}
+Release:        5%{?dist}
 Summary:        A MySQL interface for Perl
 Group:          Development/Libraries
 License:        GPL+ or Artistic
@@ -65,6 +65,16 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 %{_mandir}/man3/*.3*
 
 %changelog
+* Fri Jan 24 2014 Daniel Mach <dmach@redhat.com> - 4.023-5
+- Mass rebuild 2014-01-24
+
+* Wed Jan 15 2014 Honza Horak <hhorak@redhat.com> - 4.023-4
+- Rebuild for mariadb-libs
+  Related: #1045013
+
+* Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 4.023-3
+- Mass rebuild 2013-12-27
+
 * Mon Apr 29 2013 Petr Šabata <contyk@redhat.com> - 4.023-2
 - Force MariaDB dependency as a workaround for f19 compose
 
